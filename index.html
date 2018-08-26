@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Testing Copy</title>
+  </head>
+  <body>
+    <button type="button" name="button">Attempt Copy</button>
+    <script type="text/javascript">
+      const path = require('path');
+      const fs = require('fs');
+      const { app } = require('electron').remote;
+
+      const button = document.querySelector('button');
+      const src = path.join(__dirname, 'test.txt');
+      const dest = path.join(app.getPath('home'), 'test.txt');
+
+      console.log(`Target location: ${dest}`);
+
+      button.addEventListener('click', () => {
+        fs.readdir(path.dirname(src), (err, files) => console.log(`Files in source: ${files}`));
+        fs.copyFile(src, dest, err => err ? console.error(err) : 0);
+      });
+    </script>
+  </body>
+</html>
